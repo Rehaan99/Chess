@@ -33,22 +33,19 @@ namespace GraphicGame
         public bool FirstMove = true;
         public void Initialiser(bool iswhite, int i)
         {
-            int yPos, picYPos;
             if (iswhite)
             {
                 colour = 1;
-                yPos = 6;
-                picYPos = 0;
+                YLocation = 6;
+                pieceImage = ChessImages(5, 0);
             }
             else
             {
                 colour = 2;
-                yPos = 1;
-                picYPos = 1;
+                YLocation = 1;
+                pieceImage = ChessImages(5, 1);
             }
-            pieceImage = ChessImages(5, picYPos);
             XLocation = i;
-            YLocation = yPos;
         }
         public bool Movement(int DesiredMoveXPos, int DesiredMoveYPos, int CurrentXPos, int CurrentYPos, int colour, int OtherTileColour) // make sure it cant eat pieces in front of it.
         {
@@ -119,22 +116,19 @@ namespace GraphicGame
     {
         public void Initialiser(bool iswhite, int i)
         {
-            int yPos, picYPos;
             if (iswhite)
             {
                 colour = 1;
-                yPos = 7;
-                picYPos = 0;
+                YLocation = 7;
+                pieceImage = ChessImages(4, 0);
             }
             else
             {
                 colour = 2;
-                yPos = 0;
-                picYPos = 1;
-            }
-            pieceImage = ChessImages(4, picYPos);
+                YLocation = 0;
+                pieceImage = ChessImages(4, 1);
+            }           
             XLocation = i;
-            YLocation = yPos;
         }
         public bool Movement(int DesiredMoveXPos, int DesiredMoveYPos, int CurrentXPos, int CurrentYPos, int colour, int OtherTileColour)
         {
@@ -163,22 +157,19 @@ namespace GraphicGame
     {
         public void Initialiser(bool iswhite, int i)
         {
-            int yPos, picYPos;
             if (iswhite)
             {
                 colour = 1;
-                yPos = 7;
-                picYPos = 0;
+                YLocation = 7;
+                pieceImage = ChessImages(3, 0);
             }
             else
             {
                 colour = 2;
-                yPos = 0;
-                picYPos = 1;
+                YLocation = 0;
+                pieceImage = ChessImages(3, 1);
             }
-            pieceImage = ChessImages(3, picYPos);
             XLocation = i;
-            YLocation = yPos;
         }
         public bool Movement(int DesiredMoveXPos, int DesiredMoveYPos, int CurrentXPos, int CurrentYPos, int colour, int OtherTileColour)
         {
@@ -201,22 +192,19 @@ namespace GraphicGame
     {
         public void Initialiser(bool iswhite, int i)
         {
-            int yPos, picYPos;
             if (iswhite)
             {
                 colour = 1;
-                yPos = 7;
-                picYPos = 0;
+                YLocation = 7;
+                pieceImage = ChessImages(2, 0);
             }
             else
             {
                 colour = 2;
-                yPos = 0;
-                picYPos = 1;
+                YLocation = 0;
+                pieceImage = ChessImages(2, 1);
             }
-            pieceImage = ChessImages(2, picYPos);
             XLocation = i;
-            YLocation = yPos;
         }
         public bool Movement(int DesiredMoveXPos, int DesiredMoveYPos, int CurrentXPos, int CurrentYPos, int colour, int OtherTileColour)// make sure it cant jump over pieces.
         {
@@ -245,22 +233,19 @@ namespace GraphicGame
     {
         public void Initialiser(bool iswhite)
         {
-            int yPos, picYPos;
             if (iswhite)
             {
                 colour = 1;
-                yPos = 7;
-                picYPos = 0;
+                YLocation = 7;
+                pieceImage = ChessImages(1, 0);
             }
             else
             {
                 colour = 2;
-                yPos = 0;
-                picYPos = 1;
+                YLocation = 0;
+                pieceImage = ChessImages(1, 1);
             }
-            pieceImage = ChessImages(0, picYPos);
             XLocation = 4;
-            YLocation = yPos;
         }
         public bool Movement(int DesiredMoveXPos, int DesiredMoveYPos, int CurrentXPos, int CurrentYPos, int colour, int OtherTileColour)
         {
@@ -291,22 +276,19 @@ namespace GraphicGame
 
         public void Initialiser(bool iswhite)
         {
-            int yPos, picYPos;
             if (iswhite)
             {
                 colour = 1;
-                yPos = 7;
-                picYPos = 0;
+                YLocation = 7;
+                pieceImage = ChessImages(0, 0);
             }
             else
             {
                 colour = 2;
-                yPos = 0;
-                picYPos = 1;
+                YLocation = 0;
+                pieceImage = ChessImages(0, 1);
             }
-            pieceImage = ChessImages(1, picYPos);
             XLocation = 3;
-            YLocation = yPos;
         }
         public bool Movement(int DesiredMoveXPos, int DesiredMoveYPos, int CurrentXPos, int CurrentYPos, int colour, int OtherTileColour)
         {

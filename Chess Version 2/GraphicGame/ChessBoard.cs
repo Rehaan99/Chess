@@ -26,9 +26,11 @@ namespace GraphicGame
         int[] MoveToTile = new int[3];
         int XCurPos = 0;
         int YCurPos = 0;
-        int movesBeforeDraw = 0;
         int tileSizeW, tileSizeH, MouseTilePosX, MouseTilePosY, rightSpace;
         bool turn = true; // true means white turn
+        List<int[]> TraversablePoints = new List<int[]>();
+        Button tips = new Button();
+        bool showHints = false;
         #endregion
         #region Drawing the game
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -39,14 +41,14 @@ namespace GraphicGame
             tileSizeW = (int)((Width - (Width / 5)) * 0.96 / mapSize);
             rightSpace = Width - ((int)((Width - (Width / 5)) * 0.96));
             tileSizeH = (Height - 32) / mapSize;
-            int xPos, yPos;
-            bool colourBlack = false;
-            Graphics background = e.Graphics;
+            //above code makes the program dynamic in size - based on the size of the application.
+            bool colourBlack = false; // dictates the colour of the first tile.
+            Graphics background = e.Graphics; // initialise graphics
             Pen tilePen = new Pen(Color.Black, 1);
-            for (yPos = 0; yPos < tileSizeH * mapSize; yPos += tileSizeH)
+            for (int yPos = 0; yPos < tileSizeH * mapSize; yPos += tileSizeH)
             {
 
-                for (xPos = 0; xPos < tileSizeW * mapSize; xPos += tileSizeW)
+                for (int xPos = 0; xPos < tileSizeW * mapSize; xPos += tileSizeW)
                 {
                     Rectangle backgroundSquare = new Rectangle(xPos, yPos, tileSizeW, tileSizeH);
                     if (colourBlack)
@@ -99,14 +101,12 @@ namespace GraphicGame
                 {
                     kingDanger = AllPieces[1];
                 }
-
                 background.DrawRectangle(Danger, tileSizeW * kingDanger.XLocation, tileSizeH * kingDanger.YLocation, tileSizeW, tileSizeH);
             }
             if (NotSelected == false)
             {
                 background.DrawRectangle(Selector, tileSizeW * XCurPos, tileSizeH * YCurPos, tileSizeW, tileSizeH);
             }
-
             if (showHints)
             {
                 //display all the tiles that the clicked object can move to.               
@@ -121,8 +121,13 @@ namespace GraphicGame
                 }
             }
             BackColor = Color.White;
+            int tipsXpos = (int)(Width - rightSpace * 0.95);
+            int tipsYpos = (int)(Height - (Height / 10) * 1.75);
+            int tipsWidth = (int)(rightSpace / 3 * 2.5);
+            int tipsHeight = (Height / 10);
+            tips.Location = new Point(tipsXpos, tipsYpos);
+            tips.Size = new Size(tipsWidth, tipsHeight);
             DebugOutput(background);
-
         }
         public void DebugOutput(Graphics background)
         {
@@ -138,16 +143,9 @@ namespace GraphicGame
             else
             {
                 background.DrawString("Black Turn", TurnFont, BlackText, Width - rightSpace, 0);
-
-            }
-            int tipsXpos = (int)(Width - rightSpace * 0.95);
-            int tipsYpos = (int)(Height - (Height / 10) * 1.75);
-            int tipsWidth = (int)(rightSpace / 3 * 2.5);
-            int tipsHeight = (Height / 10);
-            tips.Location = new Point(tipsXpos, tipsYpos);
-            tips.Size = new Size(tipsWidth, tipsHeight);
+            }           
         }
-        private void tips_Click(object sender, EventArgs e)
+        private void tips_Click(object sender, EventArgs e)// when the button is clicked
         {
             if (showHints)
             {
@@ -159,14 +157,11 @@ namespace GraphicGame
                 tips.Text = "Hide Hints";
                 showHints = true;
             }
-        }
-        Button tips = new Button();
-        bool showHints = false;
+        }       
         #endregion
         #region On Start-up (Load pieces)
         public void Form1_Load(object sender, EventArgs e) // could half the number of names by doubling the array sizes and using if statements in class.
         {
-
             Controls.Add(tips);
             tips.Text = "Display Hints";
             tips.Click += new EventHandler(tips_Click);
@@ -182,11 +177,11 @@ namespace GraphicGame
             Rook[] BlackRook = new Rook[2];
             Pawn[] WhitePawns = new Pawn[8];
             Pawn[] BlackPawns = new Pawn[8];
-            for (int i = 0; i < 8; i++)
+            for (int x = 0; x < 8; x++)
             {
-                for (int x = 0; x < 8; x++)
+                for (int y = 0; y < 8; y++)
                 {
-                    BoardArray[i, x] = new int[] { 0, 0, 0 };
+                    BoardArray[x, y] = new int[] { 0, 0, 0 }; // initially fills the array with 0s, simulating an empty board.
                 }
             }
             //king (1)
@@ -288,24 +283,20 @@ namespace GraphicGame
                 {
                     timer1.Stop();
                     MessageBox.Show("Black Wins");
-
                 }
                 else if (King.XLocation == -1 && i == 1)
                 {
                     timer1.Stop();
                     MessageBox.Show("White Wins");
-
                 }
             }
         }
         #endregion
-
         public bool GameOverChecker() // if there are no possible moves left to be made for one player, other player wins. if there are no moves left to be made for both players, draw.
         {
             if (turn)
             {
-                Traversable(AllPieces[0]);
-                
+                Traversable(AllPieces[0]);                
             }
             else
             {
@@ -316,31 +307,11 @@ namespace GraphicGame
                 if (TraversablePoints.Count() == 0)
                 { 
                 return true;
-                }
-                
+                }               
             }
             TraversablePoints.Clear();
             return false;
         }
-        
-
-
-
-        //MAKE CODE MORE EFFICIENT AND EASIER TO READ ASAP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-        // add 50 moves = draw
-        // add counter to show when in less than 10?
-        //add button to propose a draw
-        //if only kings are left they draw.
-        //add en passent?
-        //add castling?
-        //add AI using mini-max thing
-        //incorporate LINQ
-        // Check which piece is putting the king in check
-
-
         public void Traversable(object Piece)
         {
             dynamic movingPiece = Piece;
@@ -402,15 +373,11 @@ namespace GraphicGame
                                     }
                                 }                               
                             }
-
                         }
                     }
                 }
             }
-        }
-        List<int[]> TraversablePoints = new List<int[]>();
-
-
+        }    
         public bool KingSafeCheck()
         {
             bool ValidMove;
@@ -464,12 +431,10 @@ namespace GraphicGame
                         highlightKing = true;
                         return false;
                     }
-
                 }
             }
             return true;
         }
-
         public bool PathChecker(int XNewPos, int YNewPos, dynamic Piece, bool kingCheck)
         {
             int checkXPos = XCurPos;
@@ -632,7 +597,6 @@ namespace GraphicGame
                 for (int i = 0; i < 3; i++)
                 {
                     SelectedTile[i] = BoardArray[XCurPos, YCurPos][i];
-
                 }
                 if (turn == true && SelectedTile[0] == 1)//valid piece exists in that tile.
                 {
@@ -643,7 +607,7 @@ namespace GraphicGame
                 {
                     NotSelected = false;
                     Traversable(PieceIndex[SelectedTile[0], SelectedTile[1], SelectedTile[2]]);
-                }
+                }               
             }
             else if (NotSelected == false)
             {
@@ -655,9 +619,7 @@ namespace GraphicGame
                     {
                         MoveToTile[i] = BoardArray[XNewPos, YNewPos][i];
                     }
-
                     Piece = PieceIndex[SelectedTile[0], SelectedTile[1], SelectedTile[2]];
-
                     oldXPos1 = Piece.XLocation;
                     oldYPos1 = Piece.YLocation;
                     ValidMove = Piece.Movement(XNewPos, YNewPos, XCurPos, YCurPos, SelectedTile[0], MoveToTile[0]);//defines the directions they can travel              
@@ -718,64 +680,7 @@ namespace GraphicGame
                                 Piece2.YLocation = -1;
                             }
                             NotSelected = true;
-                            isKingSafe = KingSafeCheck();                            
-                            if (turn && isKingSafe)//switch turns
-                            {
-                                highlightKing = false;
-                                turn = false;                               
-                                if (GameOverChecker() == true)
-                                {
-                                    timer1.Stop();
-                                    MessageBox.Show("White Wins");
-                                }
-                                TraversablePoints.Clear();
-                                if (Piece.GetType().ToString() == "GraphicGame.Pawn")
-                                {
-                                    Piece.FirstMove = false;
-                                }
-                            }
-                            else if (!turn && isKingSafe)
-                            {
-                                highlightKing = false;
-                                turn = true;                              
-                                
-                                TraversablePoints.Clear();
-                                if (Piece.GetType().ToString() == "GraphicGame.Pawn")
-                                {
-                                    Piece.FirstMove = false;
-                                }
-                            }
-                            else // return to original positions
-                            {
-                                if (!turn)
-                                {
-                                    if (GameOverChecker() == true)
-                                    {
-                                        timer1.Stop();
-                                        MessageBox.Show("White Wins");
-                                    }
-                                }
-                                else
-                                {
-                                    if (GameOverChecker() == true)
-                                    {
-                                        timer1.Stop();
-                                        MessageBox.Show("Black Wins");
-                                    }
-
-                                }
-                                BoardArray[Piece.XLocation, Piece.YLocation] = new int[] { 0, 0, 0 };
-                                Piece.XLocation = oldXPos1;
-                                Piece.YLocation = oldYPos1;
-                                BoardArray[Piece.XLocation, Piece.YLocation] = new int[] { SelectedTile[0], SelectedTile[1], SelectedTile[2] };
-                                TraversablePoints.Clear();
-                                if (pieceCaptured)
-                                {
-                                    Piece2.XLocation = XNewPos;
-                                    Piece2.YLocation = YNewPos;
-                                    BoardArray[Piece2.XLocation, Piece2.YLocation] = new int[] { MoveToTile[0], MoveToTile[1], MoveToTile[2] };
-                                }
-                            }
+                            EndTurn(pieceCaptured,Piece,Piece2, oldXPos1, oldYPos1, XNewPos, YNewPos);                            
                         }
                     }
                     else
@@ -791,6 +696,68 @@ namespace GraphicGame
             }
         }
         #endregion
+        public void EndTurn(bool pieceCaptured, dynamic Piece, dynamic Piece2,int oldXPos1, int oldYPos1,int XNewPos, int YNewPos)
+        {
+            bool isKingSafe = KingSafeCheck();
+            if (turn && isKingSafe)//switch turns
+            {
+                highlightKing = false;
+                turn = false;
+                if (GameOverChecker() == true)
+                {
+                    timer1.Stop();
+                    MessageBox.Show("White Wins");
+                }
+                TraversablePoints.Clear();
+                if (Piece.GetType().ToString() == "GraphicGame.Pawn")
+                {
+                    Piece.FirstMove = false;
+                }
+            }
+            else if (!turn && isKingSafe)
+            {
+                highlightKing = false;
+                turn = true;
+
+                TraversablePoints.Clear();
+                if (Piece.GetType().ToString() == "GraphicGame.Pawn")
+                {
+                    Piece.FirstMove = false;
+                }
+            }
+            else // return to original positions
+            {
+                if (!turn)
+                {
+                    if (GameOverChecker() == true)
+                    {
+                        timer1.Stop();
+                        MessageBox.Show("White Wins");
+                    }
+                }
+                else
+                {
+                    if (GameOverChecker() == true)
+                    {
+                        timer1.Stop();
+                        MessageBox.Show("Black Wins");
+                    }
+
+                }
+                BoardArray[Piece.XLocation, Piece.YLocation] = new int[] { 0, 0, 0 };
+                Piece.XLocation = oldXPos1;
+                Piece.YLocation = oldYPos1;
+                BoardArray[Piece.XLocation, Piece.YLocation] = new int[] { SelectedTile[0], SelectedTile[1], SelectedTile[2] };
+                TraversablePoints.Clear();
+                if (pieceCaptured)
+                {
+                    Piece2.XLocation = XNewPos;
+                    Piece2.YLocation = YNewPos;
+                    BoardArray[Piece2.XLocation, Piece2.YLocation] = new int[] { MoveToTile[0], MoveToTile[1], MoveToTile[2] };
+                }
+            }
+        }
+
     }
 }
 

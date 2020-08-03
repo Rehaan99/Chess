@@ -18,3 +18,13 @@ C:\Users\Rehaan's Pc\source\repos\Chess Version 2\GraphicGame\obj\Debug\GraphicG
 C:\Users\Rehaan's Pc\source\repos\Chess Version 2\GraphicGame\obj\Debug\GraphicGame.exe
 C:\Users\Rehaan's Pc\source\repos\Chess Version 2\GraphicGame\obj\Debug\GraphicGame.pdb
 C:\Users\Rehaan's Pc\source\repos\Chess Version 2\GraphicGame\obj\Debug\GraphicGame.ChessBoard.resources
+C:\Users\Rehaan's Pc\Documents\GitHub\Chess\Chess Version 2\GraphicGame\bin\Debug\GraphicGame.exe.config
+C:\Users\Rehaan's Pc\Documents\GitHub\Chess\Chess Version 2\GraphicGame\bin\Debug\GraphicGame.exe
+C:\Users\Rehaan's Pc\Documents\GitHub\Chess\Chess Version 2\GraphicGame\bin\Debug\GraphicGame.pdb
+C:\Users\Rehaan's Pc\Documents\GitHub\Chess\Chess Version 2\GraphicGame\obj\Debug\GraphicGame.csprojAssemblyReference.cache
+C:\Users\Rehaan's Pc\Documents\GitHub\Chess\Chess Version 2\GraphicGame\obj\Debug\GraphicGame.ChessBoard.resources
+C:\Users\Rehaan's Pc\Documents\GitHub\Chess\Chess Version 2\GraphicGame\obj\Debug\GraphicGame.Properties.Resources.resources
+C:\Users\Rehaan's Pc\Documents\GitHub\Chess\Chess Version 2\GraphicGame\obj\Debug\GraphicGame.csproj.GenerateResource.cache
+C:\Users\Rehaan's Pc\Documents\GitHub\Chess\Chess Version 2\GraphicGame\obj\Debug\GraphicGame.csproj.CoreCompileInputs.cache
+C:\Users\Rehaan's Pc\Documents\GitHub\Chess\Chess Version 2\GraphicGame\obj\Debug\GraphicGame.exe
+C:\Users\Rehaan's Pc\Documents\GitHub\Chess\Chess Version 2\GraphicGame\obj\Debug\GraphicGame.pdb
